@@ -1,6 +1,5 @@
-import { VStack, Box, Link, Text } from '@chakra-ui/react'
+import { VStack, Box, Text } from '@chakra-ui/react'
 import { GearSix, UserList, HouseLine, SignOut } from 'phosphor-react'
-import NextLink from "next/link"
 import { signOut } from 'next-auth/react'
 import { NavLink } from './NavLink'
 

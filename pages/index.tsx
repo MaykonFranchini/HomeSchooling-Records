@@ -1,8 +1,7 @@
-import { LoginButton } from '../components/Login-btn'
 import { Sidebar } from '../components/Sidebar'
-import { Text, Box } from '@chakra-ui/react'
+import {  Box } from '@chakra-ui/react'
 import Head from 'next/head'
-
+import { Header } from '../components/Header'
 export default function Home()  {
   return (
     <div>
@@ -11,8 +10,8 @@ export default function Home()  {
       </Head>
 
       <Sidebar />
-      <Box w='100%' ml='240px' p={5}>
-        <Text fontSize='2xl'>Welcome home</Text>
+      <Box ml='240px' p={5}>
+        <Header />
       </Box>
     </div>
   )
