@@ -13,7 +13,7 @@ export function Header() {
     <Flex justify='space-between'>
       <Text>{formattedDate}</Text>
       <Box display='flex' alignItems='center' gap={3}>
-        <Bell size={24} color="#616465" weight="light" />
+        <Box p={1} borderRadius='50%' bg='whiteAlpha.900'><Bell size={24} color="#616465" weight="light" /></Box>
         {session?  <Avatar name={session.user?.name || 'John Doe'} src={session.user?.image || 'asas'}/> : <button onClick={() => signIn()}>Sign in</button>}
       </Box>
     </Flex>

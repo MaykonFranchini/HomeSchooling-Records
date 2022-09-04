@@ -7,9 +7,9 @@ interface AvatarProps {
 
 export function Avatar({name, src}: AvatarProps) {
   return (
-    <Box display='flex' alignItems='center' gap={3}>
+    <Box display='flex' alignItems='center' gap={1} >
       <ChakraAvatar size='sm' name={name} src={src} />
-      <Text fontSize='sm'>{name}</Text>
+      <Text fontSize='sm' fontWeight='semibold'>{name}</Text>
     </Box>
   )
 }
