@@ -1,6 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import Head from 'next/head'
 import { Sidebar } from "../components/Sidebar";
+import { Header } from "../components/Header";
 
 export default function Students() {
   return (
@@ -10,7 +11,9 @@ export default function Students() {
       </Head>
 
       <Sidebar />
-      <Box w='100%' ml='240px' p={5}>
+      <Box ml='240px' p={5}>
+        <Header />
+        
         <Text fontSize='2xl'>Students</Text>
       </Box>
     </Box>
