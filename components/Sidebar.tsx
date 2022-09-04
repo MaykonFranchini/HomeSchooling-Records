@@ -6,7 +6,7 @@ import { NavLink } from './NavLink'
 
 export function Sidebar() {
   return (
-    <Box position='absolute' height='98vh' bg='blue.600' color='gray.100' fontSize={15} fontWeight='bold' textAlign='center' w='240px'>
+    <Box position='absolute' height='98vh' bg='blue.900' color='gray.100' fontSize={15} fontWeight='bold' textAlign='center' w='240px'>
       <Text mt={8} fontSize='xl'>HomeSchoolingTrack</Text>
 
       <VStack
