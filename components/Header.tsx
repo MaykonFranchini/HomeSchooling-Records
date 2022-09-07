@@ -15,9 +15,8 @@ export function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   
   return (
-    <Flex justify='space-between'>
-      <Text>{formattedDate}</Text>
-      <Box display='flex' alignItems='center' gap={3}>
+    <Flex justify='space-between' justifyContent='flex-end' paddingX={5} w='100%'>
+      <Box display='flex' alignItems='center'  gap={3}>
         <Box p={1} borderRadius='50%' bg='whiteAlpha.900'>
           <Button onClick={onOpen} p='0' bg ='transparent' _hover={{background: 'transparent'}}><Bell size={24} color="#616465" weight="bold" /></Button>
           

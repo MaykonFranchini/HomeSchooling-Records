@@ -10,16 +10,15 @@ import { ArrowRight } from "phosphor-react";
 export default function Dashboard() {
   return (
     <>
-
       <Head>
         <title>Dashboard | HomeSchoolingTrack</title>
       </Head>
 
+      <Flex gap={2}  >
       <Sidebar />
+        <Flex flex="1" flexDirection='column' marginTop={2}>
+          <Header />
 
-      <Box ml='240px' p={5} >
-        <Header />
-        <Flex flexDirection='column' maxW='600px'>
           <Box>
             <Text fontWeight='bold'>My Students <Link href='/students' fontSize={11} marginLeft={1} color='blue.500' _hover={{color: 'blue.700'}}>View all</Link></Text>
             <Flex gap={3} marginTop={2}>
@@ -29,7 +28,7 @@ export default function Dashboard() {
             </Flex>
           </Box>
 
-          <Flex gap={4}>
+          <Flex gap={4} flexDirection={{base: 'column', md: 'row'}}>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Text fontWeight='bold'>Recent Activites</Text>
               <ActivityCard title='Math' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
@@ -51,7 +50,7 @@ export default function Dashboard() {
           </Flex>
 
         </Flex>
-      </Box>
+      </Flex>
     </>
   )
 }
