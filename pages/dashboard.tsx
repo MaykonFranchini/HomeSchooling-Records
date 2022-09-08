@@ -6,8 +6,11 @@ import { StudentCard } from "../components/StudentCard";
 import { ActivityCard } from '../components/ActivityCard';
 import { ResourceCard } from "../components/ResourceCard";
 import { ArrowRight } from "phosphor-react";
+import { useSession } from "next-auth/react";
+
 
 export default function Dashboard() {
+  const { data: session } = useSession();
   return (
     <>
       <Head>

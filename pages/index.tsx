@@ -2,6 +2,8 @@ import { Sidebar } from '../components/Sidebar'
 import {  Box } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Header } from '../components/Header'
+
+
 export default function Home()  {
   return (
     <>
@@ -10,8 +12,9 @@ export default function Home()  {
       </Head>
 
       <Sidebar />
-      <Box ml='240px' p={5} bg='blue.100'>
+      <Box p={5} bg='blue.100'>
         <Header />
+        
       </Box>
     </>
   )
