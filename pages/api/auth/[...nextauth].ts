@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
-import { prisma } from '../../../prisma/prisma'
+import { prisma } from '../../../services/prisma';
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [

@@ -14,7 +14,7 @@ export default function Students() {
       <Sidebar />
         <Flex flex="1" flexDirection='column' marginTop={2}>
           <Header />
-          <Text fontSize='2xl'>Students</Text>
+          <Text fontSize='2xl'>My students</Text>
         </Flex>
       </Flex>
     </>
