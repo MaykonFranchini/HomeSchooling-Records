@@ -16,8 +16,7 @@ export function Sidebar() {
     fallback: 'md',
   }
   )
-  console.log(isWideVersion)
-
+  
   if(isWideVersion) {
     return (
       <Box as='aside' height='98vh' bg='blue.900' color='gray.100' fontSize={15} fontWeight='bold' textAlign='center' w='240px'>

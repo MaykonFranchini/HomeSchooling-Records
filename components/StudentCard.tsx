@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 interface StudentCardProps {
   name: string;
   src?: string;
-  schoolYear: string;
+  schoolYear?: string;
 }
 
 export function StudentCard({src, name, schoolYear}: StudentCardProps) {
