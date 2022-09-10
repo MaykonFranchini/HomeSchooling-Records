@@ -123,14 +123,11 @@ export default function Students() {
 
 
           <Flex gap={3}>
-
               {children.map(child => (
-                  
                 <Link marginY={3} key={child.id} href={`student/${child.id}`}>
                   <StudentCard key={child.id} name={child.fullName} schoolYear={child.schoolYear} />
                 </Link>
               ))}
-
           </Flex>
         </Flex>
       </Flex>
