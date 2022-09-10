@@ -1,17 +1,16 @@
-
-import { Box, Button, Flex, FormControl, FormLabel, Input, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Input, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useDisclosure } from "@chakra-ui/react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
-import { Sidebar } from "../components/Sidebar";
-import { Header } from "../components/Header";
-import { StudentCard } from "../components/StudentCard";
+import { Sidebar } from "../../components/Sidebar";
+import { Header } from "../../components/Header";
+import { StudentCard } from "../../components/StudentCard";
 
 import { useForm } from "react-hook-form";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
 
-interface ChildProps { 
+interface StudentProps { 
   id: number;
   fullName: string;
   schoolYear: string;
@@ -21,7 +20,7 @@ interface ChildProps {
 }
 
 
-interface CreateChildProps { 
+interface CreateStudentProps { 
   fullName: string;
   schoolYear?: string;
   dateOfBirth: Date;
@@ -29,23 +28,23 @@ interface CreateChildProps {
 }
 
 export default function Students() {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateChildProps>();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateStudentProps>();
   const {data: session} = useSession()
-  const [children, setChildren] = useState<ChildProps[]>([])
+  const [students, setStudents] = useState<StudentProps[]>([])
 
   useEffect(()=> {
     async function fetchChildren() {
-      const res = await fetch('/api/children?parentId=' + session?.userId)
+      const res = await fetch('/api/students?parentId=' + session?.userId)
       const data = await res.json()
-      setChildren(data)
+      setStudents(data)
     }
     fetchChildren()
   }, [session?.userId])
 
-  const onSubmit = async(data: CreateChildProps) => {
+  const onSubmit = async(data: CreateStudentProps) => {
     
     try { 
-      const response = await fetch('/api/children', {
+      const response = await fetch('/api/students', {
         method: 'POST',
         body: JSON.stringify({...data, parentId: session?.userId}),
         headers: {
@@ -57,7 +56,7 @@ export default function Students() {
       if(response.status === 201) {
         onClose()
         toast.success('Student added successfully')
-        setChildren([...children, responseData])
+        setStudents([...students, responseData])
       } else {
         onClose()
         toast.error(`Error adding student: ${responseData.message}.`)
@@ -123,9 +122,9 @@ export default function Students() {
 
 
           <Flex gap={3}>
-              {children.map(child => (
-                <Link marginY={3} key={child.id} href={`student/${child.id}`}>
-                  <StudentCard key={child.id} name={child.fullName} schoolYear={child.schoolYear} />
+              {students.map(student => (
+                <Link marginY={3} key={student.id} href={`students/${student.id}`}>
+                  <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} />
                 </Link>
               ))}
           </Flex>

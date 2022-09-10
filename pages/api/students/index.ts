@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     if(req.method === 'POST') {
       const {fullName, dateOfBirth, schoolYear, parentId} = req.body;
-    const childAlreadyExist = await prisma.child.findFirst({
+    const childAlreadyExist = await prisma.student.findFirst({
         where: {
           fullName,
           userId: parentId
@@ -13,10 +13,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     })
 
     if(childAlreadyExist) {
-      res.status(400).json({message: 'Child already exist'}) 
+      res.status(400).json({message: 'Student already exist'}) 
     } else {
       try {
-        const child = await prisma.child.create({
+        const student = await prisma.student.create({
           data: {
             fullName,
             schoolYear,
@@ -24,7 +24,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             dateOfBirth: new Date(dateOfBirth)
           }
       })
-      res.status(201).json(child);
+      res.status(201).json(student);
       } catch (err: any) {
         res.status(500).send('error')
       }
@@ -33,11 +33,11 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     if(req.method === 'GET') {
       const { parentId } = req.query
       const convertedParentID =Number(parentId)
-      const children = await prisma.child.findMany({
+      const students = await prisma.student.findMany({
         where: {
           userId: convertedParentID
         }
       })
-      res.status(200).json(children);
+      res.status(200).json(students);
     }
 }

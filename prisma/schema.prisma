@@ -11,13 +11,13 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
   name     String?
-  children Child[]
+  students Student[]
 }
 
-model Child {
+model Student {
   id          Int      @id @default(autoincrement())
   fullName    String
   schoolYear  String?

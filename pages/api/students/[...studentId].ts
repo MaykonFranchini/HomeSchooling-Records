@@ -6,7 +6,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
    if(req.method === 'GET') {
     const { studentId } = req.query
     const id =Number(studentId)
-    const child = await prisma.child.findFirst({
+    const child = await prisma.student.findFirst({
       where: {
         id
       }
