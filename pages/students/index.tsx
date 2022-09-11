@@ -10,11 +10,11 @@ import { useForm } from "react-hook-form";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
 
-interface StudentProps { 
+export interface StudentProps { 
   id: number;
   fullName: string;
   schoolYear: string;
-  dateOfBirth: Date;
+  dateOfBirth: Date | String;
   avatarUrl?: string;
   userId: string;
 }
