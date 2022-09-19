@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react";
 import { StudentProps } from "./index"
 import { prisma } from '../../services/prisma';
-import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, useDisclosure, Button, Textarea } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
 import { toast, ToastContainer } from "react-toastify";
@@ -66,10 +66,13 @@ export default function Student(student: StudentProps) {
       <Sidebar />
         <Flex flex="1" flexDirection='column' marginTop={2}>
           <Header />
-          <Flex gap={5}>
-            <Text fontSize='2xl'>{student.fullName.split(' ')[0]}'s learning journey</Text>
-            <Button bg='blue.100' onClick={onOpen}>Add a lesson</Button>
-          </Flex>
+          <Box>
+            <ChakraAvatar size="xl" name={student.fullName} src={student.avatarUrl}  mb={5}/>
+            <Flex gap={5}>
+              <Text fontSize='2xl'>{student.fullName.split(' ')[0]}&apos;s learning journey</Text>
+              <Button bg='blue.100' onClick={onOpen}>Add a lesson</Button>
+            </Flex>
+          </Box>
 
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
