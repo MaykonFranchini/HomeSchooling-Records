@@ -3,21 +3,54 @@ import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react";
 import { StudentProps } from "./index"
 import { prisma } from '../../services/prisma';
-import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, useDisclosure, Button } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, useDisclosure, Button, Textarea } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Sidebar } from "../../components/Sidebar";
 import { Header } from "../../components/Header";
 import { ActivityCard } from "../../components/ActivityCard";
+import { useState } from "react";
 
+interface CreateLessonProps { 
+  subject: string;
+  content: string;
+}
+
+export interface LessonProps {
+  id: number;
+  subject: string;
+  content: string;
+  studentId: number;
+  createdAt: string;
+}
 
 export default function Student(student: StudentProps) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateLessonProps>();
+  const [lessons, setLessons] = useState<LessonProps[]>(student.lessons ?? []);
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const onSubmit = () => {
-    console.log('submit')
+  const onSubmit = async (data: CreateLessonProps) => {
+    
+    try {
+      const response = await fetch('/api/lessons', {
+        method: 'POST',
+        body: JSON.stringify({...data, studentId: student.id}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const responseData = await response.json()
+      setLessons([...lessons, responseData])
+      onClose()
+      toast.success('Lesson added successfully')
+      reset()
+    } catch (err: any) {
+      toast.error('Something went wrong. Try again later.')
+      onClose()
+      reset()
+    }
   }
 
   return (
@@ -46,19 +79,16 @@ export default function Student(student: StudentProps) {
               <ModalBody>
                 <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl>
-                  <FormLabel>Full name</FormLabel>
-                  <Input type='text' {...register("fullName", { required: true})} />
-                  {errors.fullName?.type === 'required' && <Text color='red.100'>Full name is required</Text>}
+                  <FormLabel>Subject</FormLabel>
+                  <Input type='text' {...register("subject", { required: true})} />
+                  {errors.subject?.type === 'required' && <Text color='red.100'>Subject is required</Text>}
                 </FormControl>
                 <FormControl>
-                  <FormLabel>Date of Birth</FormLabel>
-                  <Input type='date' {...register("dateOfBirth", { required: true})}/>
-                  {errors.dateOfBirth?.type === 'required' && <Text color='red.100'>Date of Birth is required</Text>}                     
+                  <FormLabel>Content</FormLabel>
+                  <Textarea placeholder='Add your lesson description' {...register("content", { required: true})}/>
+                  {errors.content?.type === 'required' && <Text color='red.100'>Content is required</Text>}                     
                 </FormControl>
-                <FormControl>
-                  <FormLabel>School Year</FormLabel>             
-                </FormControl>
-                  <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
+                  <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.subject || errors.content ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
               </form>
               </ModalBody>
             </ModalContent>
@@ -66,8 +96,7 @@ export default function Student(student: StudentProps) {
 
 
           <Flex gap={3}>
-          <ActivityCard title='Math' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-          <ActivityCard title='Math' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+            { lessons.length > 0 ? lessons.map(lesson => ( <ActivityCard key={lesson.id} title={lesson.subject} content={lesson.content} date={lesson.createdAt} /> )) : <Text>No lessons yet</Text> }
           </Flex>
         </Flex>
       </Flex>
@@ -83,6 +112,9 @@ export const  getServerSideProps :GetServerSideProps = async ({req, params}) => 
     const student = await prisma.student.findUnique({
       where: {
         id: Number(id)
+      },
+      include: {
+        lessons: true
       }
     })
     
@@ -92,12 +124,20 @@ export const  getServerSideProps :GetServerSideProps = async ({req, params}) => 
       }
     }
     const formatedDOB = format(new Date(student!.dateOfBirth), 'dd/MM/yyyy')
-  
+    const formatedLessons = student?.lessons.map(lesson => {
+      return {
+        ...lesson,
+        createdAt: lesson.createdAt.toString()
+      }
+    })
+    
   // Pass data to the page via props
   return { props: {
+    id:student!.id,
     fullName: student!.fullName,
     schoolYear: student!.schoolYear,
     avatarUrl: student!.avatarUrl,
     dateOfBirth: formatedDOB,
+    lessons: formatedLessons
   } }
 }

@@ -5,9 +5,9 @@ import { Avatar } from "./Avatar";
 
 interface ActivityCardProps {
   title: string;
-  date: Date;
+  date: string;
   content: string;
-  child: {
+  child?: {
     name: string;
     src: string;
   }
@@ -15,10 +15,10 @@ interface ActivityCardProps {
 }
 
 export function ActivityCard({title, date, child, content}: ActivityCardProps) {
-  const formattedDate = formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true })
+  const formattedDate = formatDistance(new Date(date), new Date(), { addSuffix: true })
   
   return (
-    <Box bg='gray.50' p={2} mt={5} pb={4} borderRadius='12px' boxShadow=' rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
+    <Box bg='gray.50' p={2} mt={5} pb={4} borderRadius='12px' minW='260px' boxShadow=' rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
       <Flex justify='space-between' mt={2} >
         <Text fontWeight='semibold'>{title}</Text>
         
@@ -32,9 +32,11 @@ export function ActivityCard({title, date, child, content}: ActivityCardProps) {
         <Text fontSize='sm'>{content}</Text>
       </Box>
 
-      <Box mt={5}>
-        <Avatar name={child.name} />
-      </Box>
+      {child && (
+        <Box mt={5}>
+          <Avatar name={child.name} />
+        </Box>
+      )}
     </Box>
   )
 }
