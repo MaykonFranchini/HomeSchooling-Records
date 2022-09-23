@@ -9,6 +9,8 @@ import { StudentCard } from "../../components/StudentCard";
 import { useForm } from "react-hook-form";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
+import { LessonProps } from "./[id]";
+
 
 export interface StudentProps { 
   id: number;
@@ -17,6 +19,7 @@ export interface StudentProps {
   dateOfBirth: Date | String;
   avatarUrl?: string;
   userId: string;
+  lessons?: LessonProps[]
 }
 
 

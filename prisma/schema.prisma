@@ -27,4 +27,14 @@ model Student {
   userId      Int
   avatarUrl   String?
   dateOfBirth DateTime @default(now())
+  lessons     Lesson[]
+}
+
+model Lesson {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  subject   String
+  content   String
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId Int
 }
