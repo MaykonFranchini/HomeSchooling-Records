@@ -9,6 +9,11 @@ interface StudentCardProps {
 export function StudentCard({src, name, schoolYear}: StudentCardProps) {
   const nameFormated = (name : string) => {
     const [firstName, lastName] = name.split(' ');
+
+    if(!lastName) {
+      return `${firstName}`
+    }
+
     return `${firstName} ${lastName[0]}.`
   }
   return (

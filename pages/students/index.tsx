@@ -10,9 +10,10 @@ import { useForm } from "react-hook-form";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
 import { LessonProps } from "./[id]";
+import { uploadAvatar } from "../../utils/uploadAvatar";
 
 
-export interface StudentProps { 
+export interface StudentProps {
   id: number;
   fullName: string;
   schoolYear: string;
@@ -23,11 +24,12 @@ export interface StudentProps {
 }
 
 
-interface CreateStudentProps { 
+interface CreateStudentProps {
   fullName: string;
   schoolYear?: string;
   dateOfBirth: Date;
   parentId: number;
+  avatar?: File | File[];
 }
 
 export default function Students() {
@@ -45,17 +47,19 @@ export default function Students() {
   }, [session?.userId])
 
   const onSubmit = async(data: CreateStudentProps) => {
-    
-    try { 
+
+    const avatar_url = await uploadAvatar(data.avatar[0])
+
+    try {
       const response = await fetch('/api/students', {
         method: 'POST',
-        body: JSON.stringify({...data, parentId: session?.userId}),
+        body: JSON.stringify({...data, parentId: session?.userId, avatar_url }),
         headers: {
           'Content-Type': 'application/json'
         }
       })
       const responseData = await response.json()
-      
+
       if(response.status === 201) {
         onClose()
         toast.success('Student added successfully')
@@ -75,17 +79,17 @@ export default function Students() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const schoolYears = ['Nursery', 'Reception', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8', 'Year 9','Year 10', 'Year 11']
-  
+
   return (
     <>
       <Head>
       <title>My Students | HomeSchoolingTrack</title>
       </Head>
       <ToastContainer />
-          
+
       <Flex gap={5}>
-        
-        
+
+
       <Sidebar />
         <Flex flex="1" flexDirection='column' marginTop={2}>
           <Header />
@@ -109,13 +113,16 @@ export default function Students() {
                 <FormControl>
                   <FormLabel>Date of Birth</FormLabel>
                   <Input type='date' {...register("dateOfBirth", { required: true})}/>
-                  {errors.dateOfBirth?.type === 'required' && <Text color='red.100'>Date of Birth is required</Text>}                     
+                  {errors.dateOfBirth?.type === 'required' && <Text color='red.100'>Date of Birth is required</Text>}
                 </FormControl>
                 <FormControl>
                   <FormLabel>School Year</FormLabel>
                   <Select placeholder='Select year' {...register("schoolYear")}>
                     {schoolYears.map(year => <option value={year} key={year}>{year}</option>)}
-                  </Select>                 
+                  </Select>
+                </FormControl>
+                <FormControl>
+                  <Input type='file' {...register("avatar")}/>
                 </FormControl>
                   <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
               </form>
@@ -127,7 +134,7 @@ export default function Students() {
           <Flex gap={3}>
               {students.map(student => (
                 <Link marginY={3} key={student.id} href={`students/${student.id}`}>
-                  <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} />
+                  <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} src={student.avatarUrl} />
                 </Link>
               ))}
           </Flex>

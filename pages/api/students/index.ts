@@ -4,16 +4,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     if(req.method === 'POST') {
-      const {fullName, dateOfBirth, schoolYear, parentId} = req.body;
-    const childAlreadyExist = await prisma.student.findFirst({
-        where: {
-          fullName,
-          userId: parentId
-        }
-    })
+      const {fullName, dateOfBirth, schoolYear, parentId, avatar_url} = req.body;
+      const childAlreadyExist = await prisma.student.findFirst({
+          where: {
+            fullName,
+            userId: parentId
+          }
+      })
 
     if(childAlreadyExist) {
-      res.status(400).json({message: 'Student already exist'}) 
+      res.status(400).json({message: 'Student already exist'})
     } else {
       try {
         const student = await prisma.student.create({
@@ -21,7 +21,8 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             fullName,
             schoolYear,
             userId: parentId,
-            dateOfBirth: new Date(dateOfBirth)
+            dateOfBirth: new Date(dateOfBirth),
+            avatarUrl: avatar_url
           }
       })
       res.status(201).json(student);

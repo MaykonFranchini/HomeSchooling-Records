@@ -34,13 +34,13 @@ export default function Dashboard() {
           <Flex gap={4} flexDirection={{base: 'column', md: 'row'}}>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Text fontWeight='bold'>Recent Activites</Text>
-              <ActivityCard title='Math' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard title='Science' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard title='History' date={new Date()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard title='Math' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard title='Science' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard title='History' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
             </Box>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Flex fontWeight='bold' justify='space-between' alignItems='center'>
-                My Resources 
+                My Resources
                 <Flex gap={1} >
                   <Link fontSize={11} color='blue.500' _hover={{color: 'blue.700'}}>View all</Link>
                   <ArrowRight size={14} weight="bold" color='#3182CE' />
