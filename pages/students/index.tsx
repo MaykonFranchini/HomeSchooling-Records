@@ -48,7 +48,7 @@ export default function Students() {
 
   const onSubmit = async(data: CreateStudentProps) => {
 
-    const avatar_url = await uploadFile(data.avatar[0])
+    const avatar_url = await uploadFile(data.avatar[0], 'avatar')
 
     try {
       const response = await fetch('/api/students', {
