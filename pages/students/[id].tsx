@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react";
 import { StudentProps } from "./index"
 import { prisma } from '../../services/prisma';
-import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box } from "@chakra-ui/react";
+import { Wrap, Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box, WrapItem } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
 import { toast, ToastContainer } from "react-toastify";
@@ -12,10 +12,12 @@ import { Sidebar } from "../../components/Sidebar";
 import { Header } from "../../components/Header";
 import { ActivityCard } from "../../components/ActivityCard";
 import { useState } from "react";
+import { uploadFile } from "../../utils/uploadFile";
 
-interface CreateLessonProps { 
+interface CreateLessonProps {
   subject: string;
   content: string;
+  file: File;
 }
 
 export interface LessonProps {
@@ -32,11 +34,13 @@ export default function Student(student: StudentProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const onSubmit = async (data: CreateLessonProps) => {
-    
+
+    const image_url = await uploadFile(data.file[0],'file')
+
     try {
       const response = await fetch('/api/lessons', {
         method: 'POST',
-        body: JSON.stringify({...data, studentId: student.id}),
+        body: JSON.stringify({...data, studentId: student.id, image_url}),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -59,10 +63,10 @@ export default function Student(student: StudentProps) {
       <title>My Lessons | HomeSchoolingTrack</title>
       </Head>
       <ToastContainer />
-          
+
       <Flex gap={5}>
-        
-        
+
+
       <Sidebar />
         <Flex flex="1" flexDirection='column' marginTop={2}>
           <Header />
@@ -89,18 +93,22 @@ export default function Student(student: StudentProps) {
                 <FormControl>
                   <FormLabel>Content</FormLabel>
                   <Textarea placeholder='Add your lesson description' {...register("content", { required: true})}/>
-                  {errors.content?.type === 'required' && <Text color='red.100'>Content is required</Text>}                     
+                  {errors.content?.type === 'required' && <Text color='red.100'>Content is required</Text>}
                 </FormControl>
-                  <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.subject || errors.content ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
+                <FormControl>
+                  <FormLabel>Upload a file</FormLabel>
+                    <Input type='file' {...register("file")} />
+                </FormControl>
+                <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.subject || errors.content ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
               </form>
               </ModalBody>
             </ModalContent>
           </Modal>
 
 
-          <Flex gap={3}>
-            { lessons.length > 0 ? lessons.map(lesson => ( <ActivityCard key={lesson.id} title={lesson.subject} content={lesson.content} date={lesson.createdAt} /> )) : <Text>No lessons yet</Text> }
-          </Flex>
+          <Wrap spacing='16px'>
+            {lessons.length > 0 ? lessons.map(lesson => (<WrapItem w='300px' height='260px'  key={lesson.id}><ActivityCard  title={lesson.subject} content={lesson.content} date={lesson.createdAt} file_url={lesson.file_url} /></WrapItem> )) : <Text>No lessons yet</Text> }
+          </Wrap>
         </Flex>
       </Flex>
     </>
@@ -120,7 +128,7 @@ export const  getServerSideProps :GetServerSideProps = async ({req, params}) => 
         lessons: true
       }
     })
-    
+
     if(session?.userId !== student?.userId) {
       return {
         notFound: true
@@ -133,7 +141,7 @@ export const  getServerSideProps :GetServerSideProps = async ({req, params}) => 
         createdAt: lesson.createdAt.toString()
       }
     })
-    
+
   // Pass data to the page via props
   return { props: {
     id:student!.id,

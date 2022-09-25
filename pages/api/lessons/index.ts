@@ -4,16 +4,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   if(req.method === 'POST') {
-    console.log(req.body);
-    
-    const {subject, content, studentId} = req.body;
+
+    const {subject, content, studentId, image_url} = req.body;
 
     try {
       const lesson = await prisma.lesson.create({
         data: {
           subject,
           content,
-          studentId
+          studentId,
+          file_url: image_url
         }
       });
       res.status(201).json(lesson);
