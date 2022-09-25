@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
 import { LessonProps } from "./[id]";
-import { uploadAvatar } from "../../utils/uploadAvatar";
+import { uploadFile } from "../../utils/uploadFile";
 
 
 export interface StudentProps {
@@ -48,7 +48,7 @@ export default function Students() {
 
   const onSubmit = async(data: CreateStudentProps) => {
 
-    const avatar_url = await uploadAvatar(data.avatar[0])
+    const avatar_url = await uploadFile(data.avatar[0])
 
     try {
       const response = await fetch('/api/students', {
