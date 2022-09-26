@@ -1,5 +1,5 @@
 import { Sidebar } from '../components/Sidebar'
-import {  Box } from '@chakra-ui/react'
+import {  Box, Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Header } from '../components/Header'
 
@@ -11,11 +11,12 @@ export default function Home()  {
       <title>Home | HomeSchoolingTrack</title>
       </Head>
 
-      <Sidebar />
-      <Box p={5} bg='blue.100'>
-        <Header />
-        
-      </Box>
+      <Flex gap={2}>
+        <Sidebar />
+        <Flex flex="1" flexDirection='column' marginTop={2}>
+          <Header />
+        </Flex>
+      </Flex>
     </>
   )
 }
