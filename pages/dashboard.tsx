@@ -19,7 +19,7 @@ export default function Dashboard() {
 
       <Flex gap={2}  >
       <Sidebar />
-        <Flex flex="1" flexDirection='column' marginTop={2}>
+        <Flex flex="1" flexDirection='column' marginTop={2} marginLeft={{ base: '24px', md: '250px' }}>
           <Header />
 
           <Box>
@@ -34,9 +34,9 @@ export default function Dashboard() {
           <Flex gap={4} flexDirection={{base: 'column', md: 'row'}}>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Text fontWeight='bold'>Recent Activites</Text>
-              <ActivityCard title='Math' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard title='Science' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard title='History' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard file_url="" title='Math' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard file_url="" title='Science' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              <ActivityCard file_url="" title='History' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
             </Box>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Flex fontWeight='bold' justify='space-between' alignItems='center'>

@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react";
 import { StudentProps } from "./index"
 import { prisma } from '../../services/prisma';
-import { Wrap, Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box, WrapItem } from "@chakra-ui/react";
+import { Wrap, Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box, WrapItem, Grid, GridItem } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
 import { toast, ToastContainer } from "react-toastify";
@@ -64,11 +64,10 @@ export default function Student(student: StudentProps) {
       </Head>
       <ToastContainer />
 
+      <Sidebar />
       <Flex gap={5}>
 
-
-      <Sidebar />
-        <Flex flex="1" flexDirection='column' marginTop={2}>
+        <Flex flex="1" flexDirection='column' marginTop={2} marginLeft={{ base: '24px', md: '250px' }} >
           <Header />
           <Box>
             <ChakraAvatar size="xl" name={student.fullName} src={student.avatarUrl}  mb={5}/>
@@ -106,9 +105,9 @@ export default function Student(student: StudentProps) {
           </Modal>
 
 
-          <Wrap spacing='16px'>
-            {lessons.length > 0 ? lessons.map(lesson => (<WrapItem w='300px' height='260px'  key={lesson.id}><ActivityCard  title={lesson.subject} content={lesson.content} date={lesson.createdAt} file_url={lesson.file_url} /></WrapItem> )) : <Text>No lessons yet</Text> }
-          </Wrap>
+          <Grid templateColumns='1fr' gap={2}>
+            {lessons.length > 0 ? lessons.map(lesson => (<GridItem   key={lesson.id}><ActivityCard size={{sm: 400, lg:400}} title={lesson.subject} content={lesson.content} date={lesson.createdAt} file_url={lesson.file_url} /></GridItem> )) : <Text>No lessons yet</Text> }
+          </Grid>
         </Flex>
       </Flex>
     </>

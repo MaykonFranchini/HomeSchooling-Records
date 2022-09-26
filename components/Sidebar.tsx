@@ -7,7 +7,7 @@ import { NavLink } from './NavLink'
 
 export function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  
+
   const isWideVersion = useBreakpointValue({
     base: false,
     md: true,
@@ -16,10 +16,10 @@ export function Sidebar() {
     fallback: 'md',
   }
   )
-  
+
   if(isWideVersion) {
     return (
-      <Box as='aside' height='98vh' bg='blue.900' color='gray.100' fontSize={15} fontWeight='bold' textAlign='center' w='240px'>
+      <Box as='aside' position='fixed' zIndex={1} overflowX='hidden' top='0' left='0' height='100vh' bg='blue.900' color='gray.100' fontSize={15} fontWeight='bold' textAlign='center' w='240px'>
         <Text mt={8} fontSize='xl'>HomeSchoolingTrack</Text>
 
         <VStack
@@ -54,7 +54,7 @@ export function Sidebar() {
       isOpen={isOpen}
       placement='left'
       onClose={onClose}
-      
+
     >
       <DrawerOverlay />
       <DrawerContent bg='blue.900' fontSize={15} fontWeight='bold' maxWidth='250px'>
@@ -83,10 +83,10 @@ export function Sidebar() {
           </VStack>
         </DrawerBody>
 
-        
+
       </DrawerContent>
     </Drawer>
     </>
   )
-   
+
 }

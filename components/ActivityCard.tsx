@@ -12,14 +12,14 @@ interface ActivityCardProps {
     name: string;
     src: string;
   }
-
+  size?: {sm: number, lg: number}
 }
 
-export function ActivityCard({title, date, child, content, file_url}: ActivityCardProps) {
+export function ActivityCard({title, date, child, content, file_url, size={sm: 260, lg:260}}: ActivityCardProps) {
   const formattedDate = formatDistance(new Date(date), new Date(), { addSuffix: true })
 
   return (
-    <Box bg='gray.50' p={2} mt={5} pb={4} borderRadius='12px' minW='260px' boxShadow=' rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
+    <Box bg='gray.50' p={2} mt={5} pb={4} borderRadius='12px' w={{base: `${size.sm}px`, md: `${size.lg}px`}} boxShadow=' rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'>
       <Flex justify='space-between' mt={2} >
         <Text fontWeight='semibold'>{title}</Text>
 

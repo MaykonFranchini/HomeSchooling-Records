@@ -91,7 +91,7 @@ export default function Students() {
 
 
       <Sidebar />
-        <Flex flex="1" flexDirection='column' marginTop={2}>
+        <Flex flex="1" flexDirection='column' marginTop={2} marginLeft={{ base: '24px', md: '250px' }}>
           <Header />
           <Flex gap={5}>
             <Text fontSize='2xl'>My students</Text>
@@ -132,11 +132,16 @@ export default function Students() {
 
 
           <Flex gap={3}>
-              {students.map(student => (
-                <Link marginY={3} key={student.id} href={`students/${student.id}`}>
-                  <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} src={student.avatarUrl} />
-                </Link>
-              ))}
+
+              {students.length > 0 ?
+                students.map(student => (
+                  <Link marginY={3} key={student.id} href={`students/${student.id}`}>
+                    <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} src={student.avatarUrl} />
+                  </Link>
+                ))
+              :
+                <Text>You don`t have any pupils.</Text>
+              }
           </Flex>
         </Flex>
       </Flex>

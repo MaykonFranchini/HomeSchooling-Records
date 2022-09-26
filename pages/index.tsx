@@ -13,7 +13,7 @@ export default function Home()  {
 
       <Flex gap={2}>
         <Sidebar />
-        <Flex flex="1" flexDirection='column' marginTop={2}>
+        <Flex flex="1" flexDirection='column' marginTop={2} marginLeft={{ base: '24px', md: '250px' }}>
           <Header />
         </Flex>
       </Flex>
