@@ -7,7 +7,7 @@ interface ActivityCardProps {
   title: string;
   date: string;
   content: string;
-  file_url: string;
+  file_url: string| undefined;
   child?: {
     name: string;
     src: string;
@@ -33,16 +33,16 @@ export function ActivityCard({title, date, child, content, file_url, size={sm: 2
         <Text fontSize='sm'>{content}</Text>
       </Box>
 
+      {file_url &&
+      <Box mt={2} >
+        <Image src={file_url} alt={content} borderRadius='6px' />
+      </Box>}
       {child && (
         <Box mt={5}>
           <Avatar name={child.name} />
         </Box>
       )}
 
-      {file_url &&
-      <Box mt={2} >
-        <Image src={file_url} alt={content} borderRadius='6px' />
-      </Box>}
     </Box>
   )
 }
