@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react";
 import { StudentProps } from "./index"
 import { prisma } from '../../services/prisma';
-import { Wrap, Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box, WrapItem, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Text, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, Button, Textarea, Avatar as ChakraAvatar, Box, WrapItem, Grid, GridItem } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
 import { toast, ToastContainer } from "react-toastify";
@@ -26,6 +26,7 @@ export interface LessonProps {
   content: string;
   studentId: number;
   createdAt: string;
+  file_url?: string;
 }
 
 export default function Student(student: StudentProps) {

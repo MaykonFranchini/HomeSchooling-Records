@@ -37,11 +37,14 @@ export default function Students() {
   const {data: session} = useSession()
   const [students, setStudents] = useState<StudentProps[]>([])
 
+
   useEffect(()=> {
     async function fetchChildren() {
-      const res = await fetch('/api/students?parentId=' + session?.userId)
-      const data = await res.json()
-      setStudents(data)
+      if(session?.userId) {
+        const res = await fetch('/api/students?parentId=' + session?.userId)
+        const data = await res.json()
+        setStudents(data)
+      }
     }
     fetchChildren()
   }, [session?.userId])
@@ -122,9 +125,10 @@ export default function Students() {
                   </Select>
                 </FormControl>
                 <FormControl>
+                  <FormLabel>Profile photo</FormLabel>
                   <Input type='file' {...register("avatar")}/>
                 </FormControl>
-                  <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
+                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit">Create a student</Button>
               </form>
               </ModalBody>
             </ModalContent>
