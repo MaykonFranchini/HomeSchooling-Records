@@ -6,11 +6,19 @@ import { StudentCard } from "../components/StudentCard";
 import { ActivityCard } from '../components/ActivityCard';
 import { ResourceCard } from "../components/ResourceCard";
 import { ArrowRight } from "phosphor-react";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { StudentProps } from "./students";
+import { LessonProps} from './students/[id]'
 
+interface DashboardProps {
+  students: StudentProps[],
+  recentActivities: LessonProps[]
+}
 
-export default function Dashboard() {
-  const { data: session } = useSession();
+export default function Dashboard({students, recentActivities}: DashboardProps) {
+
+  console.log(students)
   return (
     <>
       <Head>
@@ -25,18 +33,25 @@ export default function Dashboard() {
           <Box>
             <Text fontWeight='bold'>My Students <Link href='/students' fontSize={11} marginLeft={1} color='blue.500' _hover={{color: 'blue.700'}}>View all</Link></Text>
             <Flex gap={3} marginTop={2}>
-              <StudentCard  name='Lucas Franchini' schoolYear='Year 6'/>
-              <StudentCard  name='Gabriel Franchini' schoolYear='Year 1'/>
-              <StudentCard  name='Maykon Franchini' src='https://github.com/maykonfranchini.png' schoolYear='Year 12'/>
+              {students ?
+                students.map(student => (
+                  <Link marginY={3} key={student.id} href={`students/${student.id}`}>
+                    <StudentCard key={student.id} name={student.fullName} schoolYear={student.schoolYear} src={student.avatarUrl} />
+                  </Link>
+                ))
+                :
+                <Text>You don`t have any pupils.</Text>
+              }
+
             </Flex>
           </Box>
 
           <Flex gap={4} flexDirection={{base: 'column', md: 'row'}}>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Text fontWeight='bold'>Recent Activites</Text>
-              <ActivityCard file_url="" title='Math' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Lucas Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard file_url="" title='Science' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
-              <ActivityCard file_url="" title='History' date={new Date().toDateString()} content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.' child={{name: 'Gabriel Franchini', src: 'https://github.com/maykonfranchini.png'}}/>
+              {recentActivities ? recentActivities.map(activity => (
+                <ActivityCard key={activity.id} file_url={activity.file_url} title={activity.subject} date={activity.createdAt} content={activity.content} child={{ name: activity.student.fullName, src: activity.student.avatarUrl }} />
+              )) : <Text>No files</Text>}
             </Box>
             <Box p={3} bg='whiteAlpha.900' maxW='300px' mt={5} borderRadius='12px' boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px'>
               <Flex fontWeight='bold' justify='space-between' alignItems='center'>
@@ -56,4 +71,28 @@ export default function Dashboard() {
       </Flex>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+  const session = await getSession({ req })
+
+  if (!session) {
+    return {
+      notFound: true
+    }
+  }
+
+  const response = await fetch('http://localhost:3000/api/users/profile?userId=' + session.userId)
+  const data = await response.json()
+
+console.log(data);
+
+
+  // Pass data to the page via props
+  return {
+    props: {
+      students: data.students,
+      recentActivities: data.recentActivities
+    }
+  }
 }
