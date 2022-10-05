@@ -1,7 +1,10 @@
 import { Sidebar } from '../components/Sidebar'
-import {  Box, Flex } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Header } from '../components/Header'
+import { GetStaticProps } from 'next'
+import { getSession } from 'next-auth/react'
+import { unstable_getServerSession } from 'next-auth/next'
 
 
 export default function Home()  {

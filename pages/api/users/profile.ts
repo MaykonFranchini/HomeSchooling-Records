@@ -25,7 +25,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     include: {
       student: true
     },
-    take: 3
+    take: 3,
+    orderBy: {
+      createdAt: 'desc'
+    }
   })
 
   res.json({ students, recentActivities})

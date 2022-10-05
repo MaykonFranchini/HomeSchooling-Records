@@ -1,6 +1,8 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from '../../../services/prisma';
+
+
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -14,12 +16,12 @@ export default NextAuth({
   callbacks: {
     async session({session}) {
       const email = session.user?.email
-      
+
       if(email && !session.userId) {
         const data = await prisma.user.findUnique({
           where: {email: email}
         })
-        
+
         if(data?.id) {
           return { ...session, userId: data.id }
         }
@@ -34,7 +36,7 @@ export default NextAuth({
        const data = await prisma.user.findUnique({
           where: { email }
         })
-        
+
         if(!data) {
           const data = await prisma.user.create({
             data: {
@@ -45,8 +47,8 @@ export default NextAuth({
         }
         return true
       }
-      
-      
+
+
     }
   }
 })

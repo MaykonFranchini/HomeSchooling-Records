@@ -18,7 +18,6 @@ interface DashboardProps {
 
 export default function Dashboard({students, recentActivities}: DashboardProps) {
 
-  console.log(students)
   return (
     <>
       <Head>
