@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from '../../../services/prisma';
-
+import type { Adapter } from "next-auth/adapters"
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -47,8 +47,7 @@ export default NextAuth({
         }
         return true
       }
-
-
+      return true
     }
   }
 })
