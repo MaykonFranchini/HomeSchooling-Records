@@ -29,7 +29,7 @@ interface CreateStudentProps {
   schoolYear?: string;
   dateOfBirth: Date;
   parentId: number;
-  avatar?: File | File[];
+  avatar: FileList;
 }
 
 export default function Students() {
