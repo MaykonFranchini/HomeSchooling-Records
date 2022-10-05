@@ -17,7 +17,7 @@ import { uploadFile } from "../../utils/uploadFile";
 interface CreateLessonProps {
   subject: string;
   content: string;
-  file: File;
+  file: FileList;
 }
 
 export interface LessonProps {

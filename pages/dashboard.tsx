@@ -9,11 +9,28 @@ import { ArrowRight } from "phosphor-react";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { StudentProps } from "./students";
-import { LessonProps} from './students/[id]'
+
+interface sessionProps {
+  data: Object;
+  userId: number;
+}
+
+interface recentActivitiesProps {
+  id: number;
+  subject: string;
+  content: string;
+  studentId: number;
+  createdAt: string;
+  file_url?: string;
+  student: {
+    fullName: string;
+    avatarUrl: string;
+  }
+}
 
 interface DashboardProps {
   students: StudentProps[],
-  recentActivities: LessonProps[]
+  recentActivities: recentActivitiesProps[]
 }
 
 export default function Dashboard({students, recentActivities}: DashboardProps) {
@@ -81,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     }
   }
 
-  const response = await fetch(process.env.USER_DATA + session.userId)
+  const response = await fetch('http://localhost:3000/api/users/profile?userId=' + session.userId)
   const data = await response.json()
 
 console.log(data);
