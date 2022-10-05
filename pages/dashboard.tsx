@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     }
   }
 
-  const response = await fetch('http://localhost:3000/api/users/profile?userId=' + session.userId)
+  const response = await fetch(process.env.USER_DATA + session.userId)
   const data = await response.json()
 
 console.log(data);
