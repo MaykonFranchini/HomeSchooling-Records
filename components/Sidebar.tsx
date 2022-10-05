@@ -35,7 +35,7 @@ export function Sidebar() {
 
           <NavLink href='/settings' icon={GearSix} >Settings</NavLink>
 
-          <Box cursor='pointer' onClick={() => signOut()} h='40px' position='absolute' p={5} bottom={16} display='flex' alignItems='center' gap={3}>
+          <Box cursor='pointer' onClick={() => signOut({ callbackUrl: "/" })} h='40px' position='absolute' p={5} bottom={16} display='flex' alignItems='center' gap={3}>
             <SignOut size={24} weight="bold" />
             Log out
           </Box>

@@ -2,7 +2,6 @@ import { Flex, Box, Modal, ModalOverlay, ModalContent,ModalHeader,
 ModalBody,ModalCloseButton, useDisclosure, Button, Link } from '@chakra-ui/react'
 
 import { signIn, useSession } from 'next-auth/react';
-import {format} from 'date-fns'
 import { Bell } from 'phosphor-react'
 import React from 'react';
 import { Avatar } from './Avatar';
@@ -10,7 +9,6 @@ import { NotificationMessage } from './NotificationMessage';
 
 export function Header() {
   const { data: session} = useSession()
-  const formattedDate = format(new Date(), 'EEEE, d MMMM')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -34,7 +32,7 @@ export function Header() {
             </ModalContent>
           </Modal>
           </Box>
-        {session ?  <Avatar name={session.user?.name || 'John Doe'} src={session.user?.image || 'asas'}/> : <button onClick={() => signIn()}>Sign in</button>}
+        {session ? <Avatar name={session.user?.name || 'John Doe'} src={session.user?.image || 'asas'} /> : <button onClick={() => signIn(undefined, { callbackUrl: '/dashboard ' })}>Sign in</button>}
       </Box>
     </Flex>
   );
