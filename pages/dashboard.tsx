@@ -10,10 +10,6 @@ import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { StudentProps } from "./students";
 
-interface sessionProps {
-  data: Object;
-  userId: number;
-}
 
 interface recentActivitiesProps {
   id: number;
@@ -91,14 +87,14 @@ export default function Dashboard({students, recentActivities}: DashboardProps) 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const session = await getSession({ req })
-
+  const baseUrl = process.env.USER_PROFILE || 'https://home-schooling-records.vercel.app/api/users/profile?userId='
   if (!session) {
     return {
       notFound: true
     }
   }
 
-  const response = await fetch('https://home-schooling-records.vercel.app/api/users/profile?userId=' + session.userId)
+  const response = await fetch(baseUrl + session.userId)
   const data = await response.json()
 
 console.log(data);
