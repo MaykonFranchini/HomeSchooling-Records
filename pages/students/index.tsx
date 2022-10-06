@@ -33,10 +33,10 @@ interface CreateStudentProps {
 }
 
 export default function Students() {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateStudentProps>();
+  const { register, handleSubmit, formState, formState: { errors }, reset } = useForm<CreateStudentProps>();
   const {data: session} = useSession()
   const [students, setStudents] = useState<StudentProps[]>([])
-
+  const { isSubmitting } = formState
 
   useEffect(()=> {
     async function fetchChildren() {
@@ -128,7 +128,7 @@ export default function Students() {
                   <FormLabel>Profile photo</FormLabel>
                   <Input type='file' {...register("avatar")}/>
                 </FormControl>
-                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit">Create a student</Button>
+                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{ background: 'blue.600' }} bg={isSubmitting ? 'gray.300' : 'blue.700'} cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit">{ isSubmitting ? 'Uploading...' : 'Create a student'}</Button>
               </form>
               </ModalBody>
             </ModalContent>
