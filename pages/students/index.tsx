@@ -33,10 +33,9 @@ interface CreateStudentProps {
 }
 
 export default function Students() {
-  const { register, handleSubmit, formState, formState: { errors }, reset } = useForm<CreateStudentProps>();
+  const { register, handleSubmit, formState, formState: { errors, isSubmitting }, reset } = useForm<CreateStudentProps>();
   const {data: session} = useSession()
   const [students, setStudents] = useState<StudentProps[]>([])
-  const { isSubmitting } = formState
 
   useEffect(()=> {
     async function fetchChildren() {
@@ -51,7 +50,7 @@ export default function Students() {
 
   const onSubmit = async(data: CreateStudentProps) => {
 
-    const avatar_url = await uploadFile(data.avatar[0], 'avatar')
+    const avatar_url = data.avatar.length !== 0 ? await uploadFile(data.avatar[0], 'avatar') : ''
 
     try {
       const response = await fetch('/api/students', {
@@ -128,7 +127,7 @@ export default function Students() {
                   <FormLabel>Profile photo</FormLabel>
                   <Input type='file' {...register("avatar")}/>
                 </FormControl>
-                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{ background: 'blue.600' }} bg={isSubmitting ? 'gray.300' : 'blue.700'} cursor='pointer' disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit">{ isSubmitting ? 'Uploading...' : 'Create a student'}</Button>
+                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{ background: 'blue.600' }} bg={isSubmitting ? 'gray.300' : 'blue.700'} cursor={isSubmitting ? 'not-allowed' : 'pointer'} disabled={errors.fullName || errors.dateOfBirth ? true : undefined} fontWeight='bold' marginY={5} type="submit">{ isSubmitting ? 'Creating...' : 'Create a student'}</Button>
               </form>
               </ModalBody>
             </ModalContent>

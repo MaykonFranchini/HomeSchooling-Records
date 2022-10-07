@@ -97,9 +97,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
   const response = await fetch(baseUrl + session.userId)
   const data = await response.json()
 
-console.log(data);
-
-
   // Pass data to the page via props
   return {
     props: {

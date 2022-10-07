@@ -34,8 +34,8 @@ export function ActivityCard({title, date, child, content, file_url, size={sm: 2
       </Box>
 
       {file_url &&
-      <Box mt={2} >
-        <Image src={file_url} alt={content} maxH='200px' borderRadius='6px' />
+        <Box mt={2}>
+          <Image src={file_url} alt={content} maxH='200px' borderRadius='6px' margin='auto' />
       </Box>}
       {child && (
         <Box mt={5}>

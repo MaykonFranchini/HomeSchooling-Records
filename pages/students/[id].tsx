@@ -30,13 +30,13 @@ export interface LessonProps {
 }
 
 export default function Student(student: StudentProps) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<CreateLessonProps>();
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<CreateLessonProps>();
   const [lessons, setLessons] = useState<LessonProps[]>(student.lessons ?? []);
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const onSubmit = async (data: CreateLessonProps) => {
 
-    const image_url = await uploadFile(data.file[0],'file')
+    const image_url = data.file.length !== 0 ? await uploadFile(data.file[0], 'file') : ''
 
     try {
       const response = await fetch('/api/lessons', {
@@ -99,7 +99,7 @@ export default function Student(student: StudentProps) {
                   <FormLabel>Upload a file</FormLabel>
                     <Input type='file' {...register("file")} />
                 </FormControl>
-                <Input variant='filled' color='whiteAlpha.900' _hover={{background: 'blue.600'}} bg='blue.700' cursor='pointer' disabled={errors.subject || errors.content ? true : undefined} fontWeight='bold' marginY={5} type="submit" />
+                  <Button w='100%' variant='filled' color='whiteAlpha.900' _hover={{ background: 'blue.600' }} bg={isSubmitting ? 'gray.300' : 'blue.700'} cursor={isSubmitting ? 'not-allowed' : 'pointer'} disabled={errors.subject || errors.content ? true : undefined} fontWeight='bold' marginY={5} type="submit">{isSubmitting ? 'Creating...' : 'Create a Lesson'}</Button>
               </form>
               </ModalBody>
             </ModalContent>
