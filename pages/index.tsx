@@ -1,7 +1,7 @@
-import { Sidebar } from '../components/Sidebar'
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import Head from 'next/head'
-import { Header } from '../components/Header'
+import { Books } from 'phosphor-react'
+import { SignInButton } from '../components/SignInButton'
 
 
 export default function Home()  {
@@ -12,10 +12,23 @@ export default function Home()  {
       </Head>
 
       <Flex gap={2}>
-        <Sidebar />
-        <Flex flex="1" flexDirection='column' marginTop={2} marginLeft={{ base: '24px', md: '250px' }}>
-          <Header />
+        <Flex mt='16px' w='100%' p=' 10px 20px' justifyContent='space-between'>
+          <Flex gap={2}>
+            <Books size={32} weight="light" />
+            <Text
+              fontWeight='bold'
+              bgGradient='linear(to-l, #7928CA, #FF0080)'
+              bgClip='text'
+              fontSize='xl'
+            >
+              HomeSchollingTrack
+            </Text>
+          </Flex>
+          <Box>
+            <SignInButton/>
+          </Box>
         </Flex>
+
       </Flex>
     </>
   )
