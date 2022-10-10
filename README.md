@@ -1,34 +1,27 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Project sample
 
-First, run the development server:
+(homeSchooling.gif)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Tools used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Next.js](https://nextjs.org/) Framework for React.
+- [Chakra ui](https://chakra-ui.com/) - Components Library for react.
+- [Next Auth](https://next-auth.js.org/) - for authentication on Next.js projects.
+- [Cloudnary](https://cloudinary.com/) - for image storage.
+- [Prisma.io](https://www.prisma.io/) - ORM for Database on Node.js projects.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Project goals
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+This project has the goal to help parents, that homeschooling their childrens, to keep track of the lessons and share with the Home Education authorities.
 
-## Learn More
+Actions:
+ - Login with Google.
+ - Can add Child to your list, with name, avatar, school year and DOB.
+ - Add a lesson to a specific child, with title, description and image.
 
-To learn more about Next.js, take a look at the following resources:
+ ## Host
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ This project is hosted at vercel (https://home-schooling-records.vercel.app)
