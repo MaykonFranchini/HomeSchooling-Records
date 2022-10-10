@@ -17,15 +17,15 @@ export function NavLink({href, icon, children, ...rest}: NavLinkProps) {
   }
 
   return (
-    <Box 
-      h='40px' 
-      mt={8} 
-      display='flex' 
-      borderRadius='8px' 
-      alignItems='center' bg={active? 'blue.700' : ''} 
+    <Box
+      h='40px'
+      mt={8}
+      display='flex'
+      borderRadius='8px'
+      alignItems='center' bg={active? 'blue.700' : ''}
       _hover={{background: 'blue.600'}}
-      gap={2} 
-      p={5} 
+      gap={2}
+      p={5}
     >
       <NextLink href={href} passHref>
         <Link display='flex' color={active ? 'gray.50' : 'gray.400'} alignItems='center' gap={3} {...rest}>

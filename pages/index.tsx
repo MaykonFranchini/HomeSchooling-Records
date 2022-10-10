@@ -1,4 +1,5 @@
-import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Grid, GridItem, Text } from '@chakra-ui/react'
+import { useSession } from 'next-auth/react'
 
 import Head from 'next/head'
 import { Bookmarks, Books, NotePencil, Student } from 'phosphor-react'
@@ -7,6 +8,8 @@ import { SignInButton } from '../components/SignInButton'
 
 
 export default function Home()  {
+
+
 
     const basicBoxStyles = {
       display: 'flex',
@@ -30,7 +33,7 @@ export default function Home()  {
 
       <Box>
 
-        <Flex mt='16px' w='100%' p=' 10px 20px' justifyContent='space-between'>
+        <Flex mt='16px' w='100%' p='10px 20px' justifyContent='space-between'>
           <Flex gap={2}>
             <Books size={32} weight="light" />
             <Text
@@ -43,12 +46,12 @@ export default function Home()  {
             </Text>
           </Flex>
           <Box>
-            <SignInButton/>
+            <SignInButton />
           </Box>
         </Flex>
 
-        <Grid templateColumns={{ base: '1fr', md: 'repeat(2,1fr)' }} maxW='1200px' margin='auto'>
-          <GridItem mt='40px'>
+        <Grid templateColumns={{ base: '1fr', md: 'repeat(2,1fr)' }} minW='260px' maxW='1200px' margin='auto'>
+          <GridItem mt='40px' margin='auto'>
             <Text
               fontWeight='bold'
               bgGradient='linear(to-l, #7928CA, #FF0080)'
@@ -68,7 +71,7 @@ export default function Home()  {
             </Text>
           </GridItem >
 
-          <GridItem position='relative' sx={basicBoxStyles} >
+          <GridItem position='relative' sx={basicBoxStyles} boxShadow='rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' margin='auto' w='400px' mt={'40px'}>
             <Box bg='white' w='240px' p='16px' borderRadius='8px' display='flex' alignItems='center' gap={2} color='blackAlpha.700' boxShadow='rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' position='absolute' left='20px' top='10%'>
               <Box p='4px' color='white' borderRadius='8px' bgGradient='linear(to-l, #7928CA, #FF0080)'>
                 <Student size={24} weight="bold" />
