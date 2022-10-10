@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Project sample
 
-(homeSchooling.gif)
+![](homeSchooling.gif)
 
 ## Tools used
 
